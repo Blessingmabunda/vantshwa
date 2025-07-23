@@ -1,0 +1,81 @@
+# Dependencies
+/node_modules/
+
+# Build output
+/build/
+/dist/
+
+# Cache
+.npm/
+.yarn-cache/
+.pnpm-debug.log
+.cache/
+.cache-loader/
+
+# dotenv environment variables
+.env
+.env.*.local
+
+# Testing
+/coverage/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Parcel / Vite / Webpack
+*.local
+*.lock
+*.log
+*.tmp
+*.tsbuildinfo
+
+# IDEs
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# ESLint
+.eslintcache
+
+# Browserslist
+.browserslistrc
+
+# Storybook
+.out/
+.storybook-out/
+
+# React Native (if used at all)
+.expo/
+*.expo-shared/
+
+# Git
+*.orig
+
+# Optional: ignore build stats or performance dumps
+stats.json
+heapdump.heapsnapshot
+
+# Optional: specific to some CI/CD
+*.log
+*.pid
+*.seed
+*.tgz
+*.bak
+*.bak.*

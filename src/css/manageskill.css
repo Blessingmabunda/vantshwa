@@ -1,0 +1,218 @@
+
+
+
+  
+
+/* Profile Container */
+.profile-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap when space is limited */
+  justify-content: center; /* Center items horizontally */
+  gap: 20px; /* Space between cards */
+  background-color: #f4f4f4;
+}
+
+/* Profile Card */
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 350px;
+  height: 350px; /* Fixed height for square card */
+  padding: 20px;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  overflow: hidden; /* Prevent content from overflowing the card */
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Section */
+.profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Body Section */
+.profile-body {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.profile-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.profile-category {
+  font-size: 16px;
+  color: #777;
+  text-transform: capitalize;
+}
+
+/* Pop-out Profile Details Section */
+.profile-details-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow-y: auto;
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-description {
+  font-size: 16px;
+  color: #555;
+}
+
+.profile-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.profile-detail strong {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Certification Status */
+.certified-status {
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.certified {
+  color: green;
+  background-color: #e6f7e6;
+}
+
+.not-certified {
+  color: red;
+  background-color: #fbe1e1;
+}
+
+/* View More Button */
+.view-more-btn {
+    background-color: linear-gradient(135deg, #9c27b0, #261544);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.view-more-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Skill Image Section */
+.skill-image-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.skill-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+/* General button styles */
+.view-details-btn {
+    background-color: #64296d;  /* Blue background */
+    color: #FFFFFF;  /* White text */
+    padding: 10px 20px;  /* Padding around the text */
+    font-size: 16px;  /* Font size */
+    font-weight: bold;  /* Bold text */
+    border: none;  /* Remove default border */
+    border-radius: 25px;  /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    cursor: pointer;  /* Pointer cursor on hover */
+    transition: all 0.3s ease;  /* Smooth transition for hover effects */
+    display: inline-flex;  /* Inline-flex to center text and icon if needed */
+    align-items: center;  /* Center the text and icon vertically */
+  }
+  
+  /* Hover state */
+  .view-details-btn:hover {
+    background-color: #0056b3;  /* Darker blue when hovered */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);  /* Slightly stronger shadow */
+    transform: translateY(-2px);  /* Slight lift effect */
+  }
+  
+  /* Active state (when button is clicked) */
+  .view-details-btn:active {
+    background-color: #00408a;  /* Even darker blue */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);  /* Shadow for active state */
+    transform: translateY(1px);  /* Slight compression effect */
+  }
+  
+  /* Button icon style (optional, if you add an icon) */
+  .view-details-btn i {
+    margin-left: 8px;  /* Space between text and icon */
+    font-size: 18px;  /* Icon size */
+  }
+  
+  /* Button container */
+  .profile-body {
+    text-align: center;  /* Center the content */
+  }
+  
