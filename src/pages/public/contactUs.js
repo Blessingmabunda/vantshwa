@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../shared/header";
 import Footer from "../../shared/footer"; 
@@ -60,6 +59,7 @@ const ContactUs = () => {
 
   const contactData = {
     phone: "+27 66 052 1477",
+    altPhone: "+27 69 191 2963", // Added alternative phone number
     email: "makhubeleclinton16@gmail.com",
     address: "Stand Number 130042, Ludlow, Thulamahashe, Mpumalanga, 1365"
   };
@@ -67,21 +67,20 @@ const ContactUs = () => {
   return (
     <div style={{
       ...container,
-      margin: 0, // Reset default margin
-      padding: 0, // Reset default padding
-      width: '100vw', // Ensure full viewport width
-      overflowX: 'hidden', // Prevent horizontal scroll
-      display: 'flex', // Enable flexbox for footer positioning
-      flexDirection: 'column', // Stack children vertically
-      minHeight: '100vh', // Ensure full height
+      margin: 0,
+      padding: 0,
+      width: '100vw',
+      overflowX: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
     }}>
-      {/* Header Container */}
       <div style={{
-        width: '100vw', // Full viewport width
-        position: 'fixed', // Keep header at top
+        width: '100vw',
+        position: 'fixed',
         top: 0,
         left: 0,
-        zIndex: 4, // Above other content
+        zIndex: 4,
         margin: 0,
         padding: 0,
       }}>
@@ -110,8 +109,8 @@ const ContactUs = () => {
   
       <main style={{
         ...contentContainer,
-        flex: 1, // Grow to push footer down
-        padding: '80px 15px 80px', // Adjusted for header and footer
+        flex: 1,
+        padding: '80px 15px 80px',
         '@media (min-width: 768px)': { padding: '100px 20px 80px' }
       }}>
         <div ref={contentRef} style={contentWrapper}>
@@ -127,7 +126,11 @@ const ContactUs = () => {
             <div style={contactGrid}>
               <div style={contactCard}>
                 <h3 style={contactLabel}>Phone</h3>
-                <p style={contactValue}>{contactData.phone}</p>
+                <p style={contactValue}>
+                  {contactData.phone}
+                  <br />
+                  {contactData.altPhone} {/* Display alternative phone number */}
+                </p>
               </div>
               <div style={contactCard}>
                 <h3 style={contactLabel}>Email</h3>
@@ -149,30 +152,15 @@ const ContactUs = () => {
             <p style={bookingText}>
               Ready to start your journey with us? Contact us via phone or email to schedule your session. We offer flexible booking options to suit your needs, including in-person and virtual consultations. Reach out today to discuss how we can support you!
             </p>
-            <button
-              style={{
-                ...ctaButton,
-                transform: isHovering ? "scale(1.05)" : "scale(1)",
-                boxShadow: isHovering
-                  ? "0 0 20px rgba(59, 130, 246, 0.5)"
-                  : "0 0 10px rgba(59, 130, 246, 0.3)",
-              }}
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-              onClick={() => window.location.href = `mailto:${contactData.email}?subject=Booking%20Inquiry`}
-            >
-              Book Now →
-            </button>
           </div>
         </div>
       </main>
 
-      {/* Footer Container */}
       <div style={{
-        width: '100vw', // Full viewport width
-        position: 'relative', // Stay in document flow
-        zIndex: 3, // Above background
-        marginTop: 'auto', // Push to bottom of flex container
+        width: '100vw',
+        position: 'relative',
+        zIndex: 3,
+        marginTop: 'auto',
         margin: 0,
         padding: 0,
       }}>
@@ -202,7 +190,7 @@ const ContactUs = () => {
   );
 };
 
-// Styles (unchanged except where noted)
+// Styles (unchanged)
 const container = {
   color: "#e2e8f0",
   backgroundColor: "#0f172a",
@@ -230,7 +218,7 @@ const darkOverlay = {
   left: 0,
   width: '100%',
   height: '100%',
-  background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(249, 115, 22, 0.4), rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4))', // Mixed colors
+  background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(249, 115, 22, 0.4), rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4))',
   zIndex: 2,
 };
 
@@ -248,7 +236,7 @@ const contentWrapper = {
   padding: 'clamp(1.5rem, 5vw, 2.5rem)',
   borderRadius: '20px',
   backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(59, 130, 246, 0.3)', // Blue
+  border: '1px solid rgba(59, 130, 246, 0.3)',
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
   opacity: 0,
   transform: 'translateY(20px)',
@@ -279,7 +267,7 @@ const pageSubtitle = {
 };
 
 const highlightText = {
-  color: "#f97316", // Orange
+  color: "#f97316",
 };
 
 const contactSection = {
@@ -288,7 +276,7 @@ const contactSection = {
 };
 
 const sectionTitle = {
-  color: '#10b981', // Green
+  color: '#10b981',
   fontSize: '1.4rem',
   marginBottom: '1.5rem',
   textAlign: 'center',
@@ -307,13 +295,13 @@ const contactCard = {
   backgroundColor: 'rgba(30, 41, 59, 0.3)',
   padding: '1.2rem',
   borderRadius: '8px',
-  borderLeft: '3px solid #10b981', // Green
+  borderLeft: '3px solid #10b981',
   textAlign: 'center',
   '@media (max-width: 480px)': { padding: '1rem' }
 };
 
 const contactLabel = {
-  color: '#10b981', // Green
+  color: '#10b981',
   fontSize: '1rem',
   marginBottom: '0.5rem',
   fontWeight: 500,
@@ -328,7 +316,7 @@ const contactValue = {
 };
 
 const contactLink = {
-  color: '#10b981', // Green
+  color: '#10b981',
   textDecoration: 'none',
   ':hover': { textDecoration: 'underline' }
 };
@@ -346,25 +334,6 @@ const bookingText = {
   maxWidth: '800px',
   margin: '0 auto 2rem',
   '@media (max-width: 480px)': { fontSize: '0.9rem', marginBottom: '1.5rem' }
-};
-
-const ctaButton = {
-  padding: '1rem 2.5rem',
-  backgroundColor: 'rgba(16, 185, 129, 0.1)', // Green
-  color: '#e2e8f0',
-  border: '2px solid #f97316', // Orange
-  borderRadius: '50px',
-  fontSize: '1.1rem',
-  fontWeight: 600,
-  cursor: 'pointer',
-  transition: 'all 0.3s ease',
-  backdropFilter: 'blur(5px)',
-  outline: 'none',
-  display: 'block',
-  margin: '3rem auto 0',
-  ':hover': { backgroundColor: 'rgba(16, 185, 129, 0.3)' }, // Green
-  '@media (max-width: 768px)': { width: '100%', padding: '1rem' },
-  '@media (max-width: 480px)': { fontSize: '1rem', margin: '2rem auto 0' }
 };
 
 export default ContactUs;

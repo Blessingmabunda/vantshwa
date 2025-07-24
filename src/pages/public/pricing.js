@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../shared/header";
-import Footer from "../../shared/footer"; // Added Footer import
+import Footer from "../../shared/footer";
 import youthImage from "../../assets/youth.jpg";
 
 const PricingPage = () => {
@@ -62,7 +63,7 @@ const PricingPage = () => {
       plans: [
         {
           name: "Private Couple Session",
-          price: "R150",
+          price: "R200",
           duration: "1 hour",
           features: [
             "One-on-one consultation",
@@ -73,8 +74,8 @@ const PricingPage = () => {
         },
         {
           name: "Group Workshop",
-          price: "R100 per couple",
-          duration: "2–3 hours",
+          price: "R200 per couple",
+          duration: "3 hours",
           features: [
             "Interactive group setting",
             "Relationship building exercises",
@@ -100,7 +101,7 @@ const PricingPage = () => {
       plans: [
         {
           name: "Individual or Family Session",
-          price: "R100",
+          price: "R200",
           duration: "1 hour",
           features: [
             "Personalized budget review",
@@ -176,7 +177,7 @@ const PricingPage = () => {
       plans: [
         {
           name: "Family Session",
-          price: "R150",
+          price: "R250",
           duration: "1 hour",
           features: [
             "Family-focused support",
@@ -225,21 +226,20 @@ const PricingPage = () => {
   return (
     <div style={{
       ...container,
-      margin: 0, // Reset default margin
-      padding: 0, // Reset default padding
-      width: '100vw', // Ensure full viewport width
-      overflowX: 'hidden', // Prevent horizontal scroll
-      display: 'flex', // Enable flexbox for footer positioning
-      flexDirection: 'column', // Stack children vertically
-      minHeight: '100vh', // Ensure full height
+      margin: 0,
+      padding: 0,
+      width: '100vw',
+      overflowX: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
     }}>
-      {/* Header Container */}
       <div style={{
-        width: '100vw', // Full viewport width
-        position: 'fixed', // Keep header at top
+        width: '100vw',
+        position: 'fixed',
         top: 0,
         left: 0,
-        zIndex: 4, // Above other content
+        zIndex: 4,
         margin: 0,
         padding: 0,
       }}>
@@ -266,10 +266,10 @@ const PricingPage = () => {
 
       <main style={{
         ...contentContainer,
-        flex: 1, // Grow to push footer down
-        padding: '80px 15px 80px', // Adjusted for header and footer
+        flex: 1,
+        padding: '80px 15px 80px',
         '@media (min-width: 768px)': {
-          padding: '100px 20px 80px', // Adjusted for header and footer
+          padding: '100px 20px 80px',
         }
       }}>
         <div ref={contentRef} style={contentWrapper}>
@@ -281,15 +281,14 @@ const PricingPage = () => {
             Affordable rates with flexible options to meet your needs. All prices include VAT.
           </p>
           
-          {/* Service Category Tabs */}
           <div style={tabsContainer}>
             {pricingData.map((service, index) => (
               <button
                 key={index}
                 style={{
                   ...tabButton,
-                  backgroundColor: activeTab === index ? 'rgba(16, 185, 129, 0.2)' : 'transparent', // Green
-                  borderColor: activeTab === index ? '#10b981' : 'rgba(16, 185, 129, 0.2)' // Green
+                  backgroundColor: activeTab === index ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
+                  borderColor: activeTab === index ? '#10b981' : 'rgba(16, 185, 129, 0.2)'
                 }}
                 onClick={() => setActiveTab(index)}
               >
@@ -298,7 +297,6 @@ const PricingPage = () => {
             ))}
           </div>
           
-          {/* Pricing Cards */}
           <div style={pricingGrid}>
             {pricingData[activeTab].plans.map((plan, idx) => (
               <div key={idx} style={pricingCard}>
@@ -326,7 +324,6 @@ const PricingPage = () => {
             ))}
           </div>
           
-          {/* Additional Fees Section */}
           <div style={feesSection}>
             <h2 style={feesTitle}>Additional Charges</h2>
             <div style={feesGrid}>
@@ -343,29 +340,14 @@ const PricingPage = () => {
             * Sliding scale fees available for qualifying individuals. Contact us for payment plans.
           </div>
           
-          <button
-            style={{
-              ...ctaButton,
-              transform: isHovering ? "scale(1.05)" : "scale(1)",
-              boxShadow: isHovering 
-                ? "0 0 20px rgba(59, 130, 246, 0.5)" // Blue on hover
-                : "0 0 10px rgba(59, 130, 246, 0.3)", // Blue default
-            }}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onClick={() => window.location.href = "/contact"}
-          >
-            Get Custom Quote →
-          </button>
         </div>
       </main>
 
-      {/* Footer Container */}
       <div style={{
-        width: '100vw', // Full viewport width
-        position: 'relative', // Stay in document flow
-        zIndex: 3, // Above background
-        marginTop: 'auto', // Push to bottom of flex container
+        width: '100vw',
+        position: 'relative',
+        zIndex: 3,
+        marginTop: 'auto',
         margin: 0,
         padding: 0,
       }}>
@@ -395,7 +377,6 @@ const PricingPage = () => {
   );
 };
 
-// Styles (unchanged except where noted)
 const container = {
   color: "#e2e8f0",
   backgroundColor: "#0f172a",
@@ -423,7 +404,7 @@ const darkOverlay = {
   left: 0,
   width: '100%',
   height: '100%',
-  background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(249, 115, 22, 0.4), rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4))', // Mixed colors
+  background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(249, 115, 22, 0.4), rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4))',
   zIndex: 2,
 };
 
@@ -443,7 +424,7 @@ const contentWrapper = {
   padding: 'clamp(1.5rem, 5vw, 2.5rem)',
   borderRadius: '20px',
   backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(59, 130, 246, 0.3)', // Blue
+  border: '1px solid rgba(59, 130, 246, 0.3)',
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
   opacity: 0,
   transform: 'translateY(20px)',
@@ -474,7 +455,7 @@ const pageSubtitle = {
 };
 
 const highlightText = {
-  color: "#f97316", // Orange
+  color: "#f97316",
 };
 
 const tabsContainer = {
@@ -504,7 +485,7 @@ const tabButton = {
   whiteSpace: 'nowrap',
   flexShrink: 0,
   ':hover': {
-    backgroundColor: 'rgba(16, 185, 129, 0.1)' // Green
+    backgroundColor: 'rgba(16, 185, 129, 0.1)'
   }
 };
 
@@ -522,10 +503,10 @@ const pricingCard = {
   backgroundColor: 'rgba(30, 41, 59, 0.3)',
   borderRadius: '12px',
   padding: '2rem',
-  border: '1px solid rgba(16, 185, 129, 0.2)', // Green
+  border: '1px solid rgba(16, 185, 129, 0.2)',
   transition: 'all 0.3s ease',
   ':hover': {
-    borderColor: 'rgba(16, 185, 129, 0.5)', // Green
+    borderColor: 'rgba(16, 185, 129, 0.5)',
     transform: 'translateY(-5px)'
   },
   '@media (max-width: 768px)': {
@@ -536,11 +517,11 @@ const pricingCard = {
 const pricingHeader = {
   marginBottom: '1.5rem',
   paddingBottom: '1rem',
-  borderBottom: '1px solid rgba(16, 185, 129, 0.2)' // Green
+  borderBottom: '1px solid rgba(16, 185, 129, 0.2)'
 };
 
 const planName = {
-  color: '#10b981', // Green
+  color: '#10b981',
   fontSize: '1.3rem',
   marginBottom: '0.5rem',
   fontWeight: 600
@@ -582,7 +563,7 @@ const featureItem = {
 };
 
 const featureIcon = {
-  color: '#10b981', // Green
+  color: '#10b981',
   fontWeight: 'bold'
 };
 
@@ -600,7 +581,7 @@ const feesSection = {
 };
 
 const feesTitle = {
-  color: '#10b981', // Green
+  color: '#10b981',
   fontSize: '1.4rem',
   marginBottom: '1.5rem',
   textAlign: 'center',
@@ -617,11 +598,11 @@ const feeCard = {
   backgroundColor: 'rgba(30, 41, 59, 0.3)',
   padding: '1.2rem',
   borderRadius: '8px',
-  borderLeft: '3px solid #10b981' // Green
+  borderLeft: '3px solid #10b981'
 };
 
 const feeName = {
-  color: '#10b981', // Green
+  color: '#10b981',
   fontSize: '1rem',
   marginBottom: '0.5rem',
   fontWeight: 500
@@ -639,29 +620,6 @@ const disclaimer = {
   fontSize: '0.85rem',
   margin: '2rem 0',
   fontStyle: 'italic'
-};
-
-const ctaButton = {
-  padding: '1rem 2.5rem',
-  backgroundColor: 'rgba(16, 185, 129, 0.1)', // Green
-  color: '#e2e8f0',
-  border: '2px solid #f97316', 
-  borderRadius: '50px',
-  fontSize: '1.1rem',
-  fontWeight: 600,
-  cursor: 'pointer',
-  transition: 'all 0.3s ease',
-  backdropFilter: 'blur(5px)',
-  outline: 'none',
-  display: 'block',
-  margin: '3rem auto 0',
-  ':hover': {
-    backgroundColor: 'rgba(16, 185, 129, 0.3)' // Green
-  },
-  '@media (max-width: 768px)': {
-    width: '100%',
-    padding: '1rem'
-  }
 };
 
 export default PricingPage;

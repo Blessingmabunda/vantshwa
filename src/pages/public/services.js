@@ -502,14 +502,14 @@ particle.delay}
                 </ServiceCard>
               ))}
             </ServicesGrid>
-            <CtaButton
+            {/* <CtaButton
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
               onClick={() => window.location.href = "/contact"}
               aria-label="Get started with our services"
             >
               Get Started Today →
-            </CtaButton>
+            </CtaButton> */}
           </ContentWrapper>
         </ContentContainer>
         <FooterContainer>

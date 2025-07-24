@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../shared/header";
-import Footer from "../../shared/footer"; // Added Footer import
+import Footer from "../../shared/footer";
 import youthImage from "../../assets/youth.jpg";
 
 const AboutUsPage = () => {
@@ -57,66 +57,28 @@ const AboutUsPage = () => {
 
   const aboutSections = [
     {
-      title: "Who We Are",
-      content: [
-        {
-          heading: "Our Identity",
-          text: "Vantshwa Va Namuntlha is a community-focused organization dedicated to sustainable development and empowerment."
-        },
-        {
-          heading: "Established",
-          text: "Founded in 2023 with a passion for social change"
-        }
-      ]
-    },
-    {
       title: "Our Purpose",
       content: [
         {
-          heading: "Mission",
-          text: "To transform communities through innovative solutions that address pressing social challenges."
-        },
-        {
           heading: "Vision",
-          text: "A future where every individual has access to opportunities for growth and self-sufficiency."
-        },
-        {
-          heading: "Core Values",
-          text: "Integrity | Compassion | Innovation | Community | Sustainability"
+          text: "To raise a generation of strong, empowered individuals who will lead with wisdom, courage, and faith."
         }
       ]
     },
     {
-      title: "Our Approach",
+      title: "Core Objectives",
       content: [
         {
-          heading: "Methodology",
-          text: "We combine evidence-based practices with local cultural understanding."
+          heading: "Support Vulnerable People & Orphans",
+          text: "Providing food parcels, clothes, emotional support, access to counseling, referral services, and partnering with churches and families to build safe spaces."
         },
         {
-          heading: "Program Design",
-          text: "Tailored interventions based on community needs assessments"
+          heading: "Protecting the Community from Crime",
+          text: "Reporting criminal activities to law enforcement, running crime awareness campaigns in schools and villages, offering conflict resolution, responding to gender-based violence, and planning to establish a security company."
         },
         {
-          heading: "Impact Measurement",
-          text: "Rigorous monitoring and evaluation to ensure effectiveness"
-        }
-      ]
-    },
-    {
-      title: "Leadership & Governance",
-      content: [
-        {
-          heading: "Director: Clinton Makhubele",
-          text: "20+ years experience in community development and social entrepreneurship"
-        },
-        {
-          heading: "Registration",
-          text: "Reg No.: 2025/212832/07 | Fully compliant with national regulations"
-        },
-        {
-          heading: "Accountability",
-          text: "Transparent financial reporting and ethical governance practices"
+          heading: "Learner Empowerment & School Support",
+          text: "Empowering learners and supporting schools to foster education and personal development."
         }
       ]
     }
@@ -125,21 +87,20 @@ const AboutUsPage = () => {
   return (
     <div style={{
       ...container,
-      margin: 0, // Reset default margin
-      padding: 0, // Reset default padding
-      width: '100vw', // Ensure full viewport width
-      overflowX: 'hidden', // Prevent horizontal scroll
-      display: 'flex', // Enable flexbox for footer positioning
-      flexDirection: 'column', // Stack children vertically
-      minHeight: '100vh', // Ensure full height
+      margin: 0,
+      padding: 0,
+      width: '100vw',
+      overflowX: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
     }}>
-      {/* Header Container */}
       <div style={{
-        width: '100vw', // Full viewport width
-        position: 'fixed', // Keep header at top
+        width: '100vw',
+        position: 'fixed',
         top: 0,
         left: 0,
-        zIndex: 4, // Above other content
+        zIndex: 4,
         margin: 0,
         padding: 0,
       }}>
@@ -166,9 +127,9 @@ const AboutUsPage = () => {
 
       <main style={{
         ...contentContainer,
-        flex: 1, // Allow main content to grow and push footer down
-        paddingTop: '80px', // Adjust for header height
-        paddingBottom: '80px', // Adjust for footer height
+        flex: 1,
+        paddingTop: '80px',
+        paddingBottom: '80px',
       }}>
         <div ref={contentRef} style={contentWrapper}>
           <h1 style={pageTitle}>
@@ -200,29 +161,28 @@ const AboutUsPage = () => {
             ))}
           </div>
           
-          <button
+          {/* <button
             style={{
               ...ctaButton,
               transform: isHovering ? "scale(1.05)" : "scale(1)",
               boxShadow: isHovering 
-                ? "0 0 20px rgba(59, 130, 246, 0.5)" // Blue on hover
-                : "0 0 10px rgba(59, 130, 246, 0.3)", // Blue default
+                ? "0 0 20px rgba(59, 130, 246, 0.5)"
+                : "0 0 10px rgba(59, 130, 246, 0.3)",
             }}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
-            onClick={() => window.location.href = "/contact"}
+            onClick={() => window.location.href = "/Contact"}
           >
             Join Our Mission →
-          </button>
+          </button> */}
         </div>
       </main>
 
-      {/* Footer Container */}
       <div style={{
-        width: '100vw', // Full viewport width
-        position: 'relative', // Relative positioning to stay in flow
-        zIndex: 3, // Above background
-        marginTop: 'auto', // Push to bottom of flex container
+        width: '100vw',
+        position: 'relative',
+        zIndex: 3,
+        marginTop: 'auto',
         margin: 0,
         padding: 0,
       }}>
@@ -230,7 +190,6 @@ const AboutUsPage = () => {
       </div>
 
       <style jsx>{`
-        /* CSS Reset for body and html */
         body, html {
           margin: 0;
           padding: 0;
@@ -247,7 +206,6 @@ const AboutUsPage = () => {
   );
 };
 
-// Styles (unchanged except where noted)
 const container = {
   color: "#e2e8f0",
   backgroundColor: "#0f172a",
@@ -275,7 +233,7 @@ const darkOverlay = {
   left: 0,
   width: '100%',
   height: '100%',
-  background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(249, 115, 22, 0.4), rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4))', // Mixed colors
+  background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(249, 115, 22, 0.4), rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4))',
   zIndex: 2,
 };
 
@@ -292,7 +250,7 @@ const contentWrapper = {
   padding: '2.5rem',
   borderRadius: '20px',
   backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(59, 130, 246, 0.3)', // Blue
+  border: '1px solid rgba(59, 130, 246, 0.3)',
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
   opacity: 0,
   transform: 'translateY(20px)',
@@ -328,7 +286,7 @@ const sectionWrapper = {
 };
 
 const sectionTitle = {
-  color: '#f97316', // Orange
+  color: '#f97316',
   fontSize: 'clamp(1.3rem, 2vw, 1.6rem)',
   marginBottom: '1.5rem',
   fontWeight: 600,
@@ -337,7 +295,7 @@ const sectionTitle = {
 };
 
 const titleDecorator = {
-  color: 'rgba(16, 185, 129, 0.5)', // Green
+  color: 'rgba(16, 185, 129, 0.5)',
   marginRight: '0.8rem',
   fontSize: '1.1em',
 };
@@ -352,11 +310,11 @@ const contentBlock = {
   backgroundColor: 'rgba(30, 41, 59, 0.3)',
   padding: '1.5rem',
   borderRadius: '10px',
-  borderLeft: '3px solid #f97316', // Orange
+  borderLeft: '3px solid #f97316',
 };
 
 const contentHeading = {
-  color: '#f97316', // Orange
+  color: '#f97316',
   fontSize: '1.1rem',
   marginBottom: '0.8rem',
   fontWeight: 500,
@@ -370,15 +328,15 @@ const contentText = {
 
 const divider = {
   height: '1px',
-  background: 'linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3), rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3), transparent)', // Mixed colors
+  background: 'linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3), rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3), transparent)',
   margin: '3rem 0',
 };
 
 const ctaButton = {
   padding: '1rem 2.5rem',
-  backgroundColor: 'rgba(16, 185, 129, 0.1)', // Green
+  backgroundColor: 'rgba(16, 185, 129, 0.1)',
   color: '#e2e8f0',
-  border: '2px solid #f97316', // Orange
+  border: '2px solid #f97316',
   borderRadius: '50px',
   fontSize: '1.1rem',
   fontWeight: 600,

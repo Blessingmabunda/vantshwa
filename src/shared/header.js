@@ -10,7 +10,7 @@ const NavigationMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Set active page based on hash
+  // Set active page based on hash and scroll to top
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.substring(1) || 'home';
@@ -18,6 +18,7 @@ const NavigationMenu = () => {
         .replace('-', '')
         .replace(/(^\w|\s\w)/g, m => m.toUpperCase());
       setActivePage(formattedHash);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     handleHashChange();
