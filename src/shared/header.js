@@ -89,7 +89,7 @@ const NavigationMenu = () => {
     logoCircle: {
       width: '50px',
       height: '50px',
-      backgroundColor: '#ffffff', // Changed to white
+      backgroundColor: '#ffffff',
       borderRadius: '50%',
       display: 'flex',
       alignItems: 'center',
@@ -97,7 +97,6 @@ const NavigationMenu = () => {
       marginRight: '8px',
       transition: 'transform 0.3s ease, background-color 0.3s ease',
     },
-    
     logoText: {
       fontSize: '20px',
       fontWeight: 600,
@@ -137,7 +136,7 @@ const NavigationMenu = () => {
       transformOrigin: 'left',
       transition: 'transform 0.3s ease',
     },
-    bookingButton: {
+    buttonStyle: {
       backgroundColor: '#f97316',
       color: 'white',
       padding: '8px 16px',
@@ -147,11 +146,11 @@ const NavigationMenu = () => {
       transition: 'all 0.3s ease',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
     },
-    bookingButtonHover: {
+    buttonStyleHover: {
       transform: 'translateY(-2px)',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
     },
-    bookingButtonActive: {
+    buttonStyleActive: {
       animation: 'pulse 1.5s infinite',
     },
     mobileMenuButton: {
@@ -206,7 +205,7 @@ const NavigationMenu = () => {
       color: '#2563eb',
       backgroundColor: '#f3f4f6',
     },
-    mobileBookingButton: {
+    mobileButtonStyle: {
       backgroundColor: '#2563eb',
       color: 'white',
       padding: '12px 16px',
@@ -219,7 +218,7 @@ const NavigationMenu = () => {
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
       animation: 'fadeIn 0.5s ease-out',
     },
-    mobileBookingButtonHover: {
+    mobileButtonStyleHover: {
       backgroundColor: '#1d4ed8',
       transform: 'translateY(-2px)',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
@@ -290,7 +289,7 @@ const NavigationMenu = () => {
           </div>
 
           <nav className="desktop-nav" style={styles.desktopNav}>
-            {['Home', 'AboutUs', 'Services', 'Pricing', 'Contact'].map((item) => {
+            {['Home', 'AboutUs', 'Services', 'Pricing'].map((item) => {
               const isActive = activePage === item;
               return (
                 <div key={item} style={{ position: 'relative' }}>
@@ -326,23 +325,21 @@ const NavigationMenu = () => {
               );
             })}
             <a
-              href="#bookings"
+              href="#contact"
               style={{
-                ...styles.bookingButton,
-                ...(activePage === 'Bookings' ? styles.bookingButtonActive : {}),
+                ...styles.buttonStyle,
+                ...(activePage === 'Contact' ? styles.buttonStyleActive : {}),
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = styles.bookingButtonHover.backgroundColor;
-                e.currentTarget.style.transform = styles.bookingButtonHover.transform;
-                e.currentTarget.style.boxShadow = styles.bookingButtonHover.boxShadow;
+                e.currentTarget.style.transform = styles.buttonStyleHover.transform;
+                e.currentTarget.style.boxShadow = styles.buttonStyleHover.boxShadow;
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = styles.bookingButton.backgroundColor;
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = styles.bookingButton.boxShadow;
+                e.currentTarget.style.boxShadow = styles.buttonStyle.boxShadow;
               }}
             >
-              Bookings
+              Contact
             </a>
           </nav>
 
@@ -364,7 +361,7 @@ const NavigationMenu = () => {
 
         <div className="mobile-menu" style={styles.mobileMenu}>
           <nav style={styles.mobileNav}>
-            {['Home', 'AboutUs', 'Services', 'Pricing', 'Contact'].map((item, index) => {
+            {['Home', 'AboutUs', 'Services', 'Pricing'].map((item, index) => {
               const isActive = activePage === item;
               return (
                 <a
@@ -397,24 +394,24 @@ const NavigationMenu = () => {
               );
             })}
             <a
-              href="#bookings"
-              style={styles.mobileBookingButton}
+              href="#contact"
+              style={styles.mobileButtonStyle}
               onClick={() => {
                 toggleMobileMenu();
-                setActivePage('Bookings');
+                setActivePage('Contact');
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = styles.mobileBookingButtonHover.backgroundColor;
-                e.currentTarget.style.transform = styles.mobileBookingButtonHover.transform;
-                e.currentTarget.style.boxShadow = styles.mobileBookingButtonHover.boxShadow;
+                e.currentTarget.style.backgroundColor = styles.mobileButtonStyleHover.backgroundColor;
+                e.currentTarget.style.transform = styles.mobileButtonStyleHover.transform;
+                e.currentTarget.style.boxShadow = styles.mobileButtonStyleHover.boxShadow;
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = styles.mobileBookingButton.backgroundColor;
+                e.currentTarget.style.backgroundColor = styles.mobileButtonStyle.backgroundColor;
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = styles.mobileBookingButton.boxShadow;
+                e.currentTarget.style.boxShadow = styles.mobileButtonStyle.boxShadow;
               }}
             >
-              Bookings
+              Contact
             </a>
           </nav>
         </div>

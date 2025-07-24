@@ -26,7 +26,6 @@ const DarkLandingPage = () => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener('scroll', handleScroll);
     
-    // Initial animation trigger
     const timer = setTimeout(() => {
       if (heroRef.current) {
         heroRef.current.style.opacity = '1';
@@ -41,7 +40,6 @@ const DarkLandingPage = () => {
     };
   }, []);
 
-  // Animated floating particles with mixed colors
   const Particle = ({ size, left, top, delay }) => {
     const colors = [
       'rgba(249, 115, 22, 0.6)', // Orange
@@ -73,10 +71,13 @@ const DarkLandingPage = () => {
       position: 'relative',
       color: "#e2e8f0",
       backgroundColor: "#0f172a",
+      margin: 0, // Reset default margin
+      padding: 0, // Reset default padding
+      width: '100vw', // Ensure full viewport width
+      overflowX: 'hidden', // Prevent horizontal scroll
     }}>
       {/* Background Container */}
       <div style={darkContainer}>
-        {/* Animated floating particles */}
         {Array.from({ length: 15 }).map((_, i) => (
           <Particle 
             key={i}
@@ -86,8 +87,6 @@ const DarkLandingPage = () => {
             delay={Math.random() * 5}
           />
         ))}
-        
-        {/* Background Image with Parallax */}
         <div style={{
           ...backgroundImage,
           backgroundImage: `url(${youthImage})`,
@@ -98,15 +97,25 @@ const DarkLandingPage = () => {
         </div>
       </div>
 
-      {/* Header */}
-      <Header />
+      {/* Header Container */}
+      <div style={{
+        width: '100vw', // Full viewport width
+        position: 'fixed', // Ensure header stays at top
+        top: 0,
+        left: 0,
+        zIndex: 4, // Above other content
+        margin: 0,
+        padding: 0,
+      }}>
+        <Header />
+      </div>
 
       {/* Main Content */}
       <main style={{ 
         flex: 1,
         position: 'relative',
         zIndex: 3,
-        paddingTop: '70px',
+        paddingTop: '70px', // Adjust for header height
         display: 'flex',
         flexDirection: 'column'
       }}>
@@ -170,23 +179,28 @@ const DarkLandingPage = () => {
         </section>
       </main>
 
-      {/* Footer - Now properly positioned at the bottom */}
       <div style={{ 
         position: 'relative', 
         zIndex: 3,
-        marginTop: 'auto' // This pushes it to the bottom
+        marginTop: 'auto'
       }}>
         <Footer />
       </div>
 
-      {/* Contact Us Dialog */}
       <ContactUsDialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
       />
 
-      {/* CSS for animations */}
       <style jsx>{`
+        /* CSS Reset for body and header */
+        body, html {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          overflow-x: hidden;
+        }
+
         @keyframes float {
           0%, 100% {
             transform: translateY(0) translateX(0);
@@ -230,7 +244,7 @@ const DarkLandingPage = () => {
   );
 };
 
-// Styles
+// Styles remain the same as provided
 const darkContainer = {
   position: 'fixed',
   top: 0,

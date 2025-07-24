@@ -1,8 +1,19 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { throttle } from "lodash";
 import Header from "../../shared/header";
+import Footer from "../../shared/footer"; // Added Footer import
 import youthImage from "../../assets/youth.jpg";
+
+// Global CSS Reset
+const GlobalStyle = createGlobalStyle`
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+`;
 
 // Styled Components
 const Container = styled.div`
@@ -11,6 +22,28 @@ const Container = styled.div`
   background-color: #0f172a;
   position: relative;
   overflow-x: hidden;
+  display: flex; /* Enable flexbox for footer positioning */
+  flex-direction: column; /* Stack children vertically */
+  width: 100vw; /* Ensure full viewport width */
+`;
+
+const HeaderContainer = styled.div`
+  width: 100vw; /* Full viewport width */
+  position: fixed; /* Keep header at top */
+  top: 0;
+  left: 0;
+  z-index: 4; /* Above other content */
+  margin: 0;
+  padding: 0;
+`;
+
+const FooterContainer = styled.div`
+  width: 100vw; /* Full viewport width */
+  position: relative; /* Stay in document flow */
+  z-index: 3; /* Above background */
+  margin-top: auto; /* Push to bottom of flex container */
+  margin: 0;
+  padding: 0;
 `;
 
 const BackgroundImage = styled.div`
@@ -46,9 +79,10 @@ const DarkOverlay = styled.div`
 const ContentContainer = styled.main`
   position: relative;
   z-index: 3;
-  padding: 100px 20px 40px;
+  padding: 80px 20px 80px; /* Adjusted for header and footer height */
   max-width: 1200px;
   margin: 0 auto;
+  flex: 1; /* Grow to push footer down */
 `;
 
 const ContentWrapper = styled.div`
@@ -394,85 +428,95 @@ const ServicesPage = () => {
   ];
 
   return (
-    <Container>
-      <Header />
-      {particles.map((particle) => (
-        <Particle
-          key={particle.id}
-          size={particle.size}
-          left={particle.left}
-          top={particle.top}
-          delay={particle.delay}
-          color={particle.color}
-        />
-      ))}
-      <BackgroundImage style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}>
-        <DarkOverlay />
-      </BackgroundImage>
-      <ContentContainer>
-        <ContentWrapper ref={contentRef}>
-          <PageTitle>
-            OUR <HighlightText>SERVICES</HighlightText>
-          </PageTitle>
-          <PageSubtitle>
-            Structured, faith-based, and practical counseling programs to empower learners, couples, individuals, families, churches, and communities. Available privately, in schools, churches, or community venues.
-          </PageSubtitle>
-          <ServicesGrid>
-            {services.map((service, index) => (
-              <ServiceCard
-                key={index}
-                active={activeCategory === index}
-                onClick={() => toggleCategory(index)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                tabIndex={0}
-                role="button"
-                aria-expanded={activeCategory === index}
-                aria-label={`Toggle details for ${service.title}`}
-              >
-                <ServiceTitle>{service.title}</ServiceTitle>
-                {activeCategory === index && (
-                  <ServiceDetails>
-                    <DetailSection>
-                      <DetailTitle>Session Types:</DetailTitle>
-                      <DetailList>
-                        {service.sessions.map((session, i) => (
-                          <ListItem key={i}>{session}</ListItem>
-                        ))}
-                      </DetailList>
-                    </DetailSection>
-                    <DetailSection>
-                      <DetailTitle>Duration:</DetailTitle>
-                      <DetailText>{service.duration}</DetailText>
-                    </DetailSection>
-                    <DetailSection>
-                      <DetailTitle>Benefits:</DetailTitle>
-                      <DetailList>
-                        {service.benefits.map((benefit, i) => (
-                          <ListItem key={i}>{benefit}</ListItem>
-                        ))}
-                      </DetailList>
-                    </DetailSection>
-                  </ServiceDetails>
-                )}
-                <ServiceFooter>
-                  <ToggleButton>
-                    {activeCategory === index ? "▲ Hide Details" : "▼ Learn More"}
-                  </ToggleButton>
-                </ServiceFooter>
-              </ServiceCard>
-            ))}
-          </ServicesGrid>
-          <CtaButton
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onClick={() => window.location.href = "/contact"}
-            aria-label="Get started with our services"
-          >
-            Get Started Today →
-          </CtaButton>
-        </ContentWrapper>
-      </ContentContainer>
-    </Container>
+    <>
+      <GlobalStyle />
+      <Container>
+        <HeaderContainer>
+          <Header />
+        </HeaderContainer>
+        {particles.map((particle) => (
+          <Particle
+            key={particle.id}
+            size={particle.size}
+            left={particle.left}
+            top={particle.top}
+            delay={
+
+particle.delay}
+            color={particle.color}
+          />
+        ))}
+        <BackgroundImage style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}>
+          <DarkOverlay />
+        </BackgroundImage>
+        <ContentContainer>
+          <ContentWrapper ref={contentRef}>
+            <PageTitle>
+              OUR <HighlightText>SERVICES</HighlightText>
+            </PageTitle>
+            <PageSubtitle>
+              Structured, faith-based, and practical counseling programs to empower learners, couples, individuals, families, churches, and communities. Available privately, in schools, churches, or community venues.
+            </PageSubtitle>
+            <ServicesGrid>
+              {services.map((service, index) => (
+                <ServiceCard
+                  key={index}
+                  active={activeCategory === index}
+                  onClick={() => toggleCategory(index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  tabIndex={0}
+                  role="button"
+                  aria-expanded={activeCategory === index}
+                  aria-label={`Toggle details for ${service.title}`}
+                >
+                  <ServiceTitle>{service.title}</ServiceTitle>
+                  {activeCategory === index && (
+                    <ServiceDetails>
+                      <DetailSection>
+                        <DetailTitle>Session Types:</DetailTitle>
+                        <DetailList>
+                          {service.sessions.map((session, i) => (
+                            <ListItem key={i}>{session}</ListItem>
+                          ))}
+                        </DetailList>
+                      </DetailSection>
+                      <DetailSection>
+                        <DetailTitle>Duration:</DetailTitle>
+                        <DetailText>{service.duration}</DetailText>
+                      </DetailSection>
+                      <DetailSection>
+                        <DetailTitle>Benefits:</DetailTitle>
+                        <DetailList>
+                          {service.benefits.map((benefit, i) => (
+                            <ListItem key={i}>{benefit}</ListItem>
+                          ))}
+                        </DetailList>
+                      </DetailSection>
+                    </ServiceDetails>
+                  )}
+                  <ServiceFooter>
+                    <ToggleButton>
+                      {activeCategory === index ? "▲ Hide Details" : "▼ Learn More"}
+                    </ToggleButton>
+                  </ServiceFooter>
+                </ServiceCard>
+              ))}
+            </ServicesGrid>
+            <CtaButton
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+              onClick={() => window.location.href = "/contact"}
+              aria-label="Get started with our services"
+            >
+              Get Started Today →
+            </CtaButton>
+          </ContentWrapper>
+        </ContentContainer>
+        <FooterContainer>
+          <Footer />
+        </FooterContainer>
+      </Container>
+    </>
   );
 };
 

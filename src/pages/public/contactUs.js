@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../shared/header";
+import Footer from "../../shared/footer"; 
 import youthImage from "../../assets/youth.jpg";
 
 const ContactUs = () => {
@@ -49,8 +51,8 @@ const ContactUs = () => {
           top: `${top}%`,
           animation: `float 6s ease-in-out ${delay}s infinite`,
           filter: 'blur(1px)',
-          'z-index': 2,
-          'pointer-events': 'none'
+          zIndex: 2,
+          pointerEvents: 'none'
         }}
       />
     );
@@ -63,8 +65,29 @@ const ContactUs = () => {
   };
   
   return (
-    <div style={container}>
-      <Header />
+    <div style={{
+      ...container,
+      margin: 0, // Reset default margin
+      padding: 0, // Reset default padding
+      width: '100vw', // Ensure full viewport width
+      overflowX: 'hidden', // Prevent horizontal scroll
+      display: 'flex', // Enable flexbox for footer positioning
+      flexDirection: 'column', // Stack children vertically
+      minHeight: '100vh', // Ensure full height
+    }}>
+      {/* Header Container */}
+      <div style={{
+        width: '100vw', // Full viewport width
+        position: 'fixed', // Keep header at top
+        top: 0,
+        left: 0,
+        zIndex: 4, // Above other content
+        margin: 0,
+        padding: 0,
+      }}>
+        <Header />
+      </div>
+      
       {Array.from({ length: 10 }).map((_, i) => (
         <Particle
           key={i}
@@ -85,7 +108,12 @@ const ContactUs = () => {
         <div style={darkOverlay} />
       </div>
   
-      <main style={contentContainer}>
+      <main style={{
+        ...contentContainer,
+        flex: 1, // Grow to push footer down
+        padding: '80px 15px 80px', // Adjusted for header and footer
+        '@media (min-width: 768px)': { padding: '100px 20px 80px' }
+      }}>
         <div ref={contentRef} style={contentWrapper}>
           <h1 style={pageTitle}>
             CONTACT <span style={highlightText}>US</span>
@@ -138,8 +166,27 @@ const ContactUs = () => {
           </div>
         </div>
       </main>
-  
+
+      {/* Footer Container */}
+      <div style={{
+        width: '100vw', // Full viewport width
+        position: 'relative', // Stay in document flow
+        zIndex: 3, // Above background
+        marginTop: 'auto', // Push to bottom of flex container
+        margin: 0,
+        padding: 0,
+      }}>
+        <Footer />
+      </div>
+
       <style jsx global>{`
+        body, html {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          overflow-x: hidden;
+        }
+
         @keyframes float {
           0%, 100% { transform: translateY(0) translateX(0); }
           50% { transform: translateY(-20px) translateX(10px); }
@@ -155,14 +202,12 @@ const ContactUs = () => {
   );
 };
 
-// Styles
+// Styles (unchanged except where noted)
 const container = {
-  minHeight: '100vh',
   color: "#e2e8f0",
   backgroundColor: "#0f172a",
   position: 'relative',
   overflowX: 'hidden',
-  width: '100%'
 };
 
 const backgroundImage = {
@@ -307,7 +352,7 @@ const ctaButton = {
   padding: '1rem 2.5rem',
   backgroundColor: 'rgba(16, 185, 129, 0.1)', // Green
   color: '#e2e8f0',
-  border: '2px solid #f97316', // Green
+  border: '2px solid #f97316', // Orange
   borderRadius: '50px',
   fontSize: '1.1rem',
   fontWeight: 600,

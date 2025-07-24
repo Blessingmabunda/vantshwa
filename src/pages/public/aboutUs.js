@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../../shared/header";
+import Footer from "../../shared/footer"; // Added Footer import
 import youthImage from "../../assets/youth.jpg";
 
 const AboutUsPage = () => {
@@ -30,7 +31,6 @@ const AboutUsPage = () => {
     };
   }, []);
 
-  // Animated floating particles with mixed colors
   const Particle = ({ size, left, top, delay }) => {
     const colors = [
       'rgba(249, 115, 22, 0.6)', // Orange
@@ -55,7 +55,6 @@ const AboutUsPage = () => {
     );
   };
 
-  // About Us Content Sections
   const aboutSections = [
     {
       title: "Who We Are",
@@ -124,8 +123,28 @@ const AboutUsPage = () => {
   ];
 
   return (
-    <div style={container}>
-      <Header />
+    <div style={{
+      ...container,
+      margin: 0, // Reset default margin
+      padding: 0, // Reset default padding
+      width: '100vw', // Ensure full viewport width
+      overflowX: 'hidden', // Prevent horizontal scroll
+      display: 'flex', // Enable flexbox for footer positioning
+      flexDirection: 'column', // Stack children vertically
+      minHeight: '100vh', // Ensure full height
+    }}>
+      {/* Header Container */}
+      <div style={{
+        width: '100vw', // Full viewport width
+        position: 'fixed', // Keep header at top
+        top: 0,
+        left: 0,
+        zIndex: 4, // Above other content
+        margin: 0,
+        padding: 0,
+      }}>
+        <Header />
+      </div>
       
       {Array.from({ length: 10 }).map((_, i) => (
         <Particle 
@@ -145,7 +164,12 @@ const AboutUsPage = () => {
         <div style={darkOverlay} />
       </div>
 
-      <main style={contentContainer}>
+      <main style={{
+        ...contentContainer,
+        flex: 1, // Allow main content to grow and push footer down
+        paddingTop: '80px', // Adjust for header height
+        paddingBottom: '80px', // Adjust for footer height
+      }}>
         <div ref={contentRef} style={contentWrapper}>
           <h1 style={pageTitle}>
             ABOUT VANTSHWA VA NAMUNTLHA
@@ -193,7 +217,27 @@ const AboutUsPage = () => {
         </div>
       </main>
 
+      {/* Footer Container */}
+      <div style={{
+        width: '100vw', // Full viewport width
+        position: 'relative', // Relative positioning to stay in flow
+        zIndex: 3, // Above background
+        marginTop: 'auto', // Push to bottom of flex container
+        margin: 0,
+        padding: 0,
+      }}>
+        <Footer />
+      </div>
+
       <style jsx>{`
+        /* CSS Reset for body and html */
+        body, html {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          overflow-x: hidden;
+        }
+
         @keyframes float {
           0%, 100% { transform: translateY(0) translateX(0); }
           50% { transform: translateY(-20px) translateX(10px); }
@@ -203,9 +247,8 @@ const AboutUsPage = () => {
   );
 };
 
-// Enhanced Styles
+// Styles (unchanged except where noted)
 const container = {
-  minHeight: '100vh',
   color: "#e2e8f0",
   backgroundColor: "#0f172a",
   position: 'relative',
@@ -276,10 +319,6 @@ const pageSubtitle = {
   lineHeight: 1.6,
 };
 
-const highlightText = {
-  color: "#f97316", // Orange
-};
-
 const sectionsContainer = {
   margin: '2rem 0',
 };
@@ -289,7 +328,7 @@ const sectionWrapper = {
 };
 
 const sectionTitle = {
-  color: '#f97316', // Green
+  color: '#f97316', // Orange
   fontSize: 'clamp(1.3rem, 2vw, 1.6rem)',
   marginBottom: '1.5rem',
   fontWeight: 600,
@@ -313,11 +352,11 @@ const contentBlock = {
   backgroundColor: 'rgba(30, 41, 59, 0.3)',
   padding: '1.5rem',
   borderRadius: '10px',
-  borderLeft: '3px solid #f97316', // Green
+  borderLeft: '3px solid #f97316', // Orange
 };
 
 const contentHeading = {
-  color: '#f97316', // Green
+  color: '#f97316', // Orange
   fontSize: '1.1rem',
   marginBottom: '0.8rem',
   fontWeight: 500,
@@ -339,7 +378,7 @@ const ctaButton = {
   padding: '1rem 2.5rem',
   backgroundColor: 'rgba(16, 185, 129, 0.1)', // Green
   color: '#e2e8f0',
-  border: '2px solid #f97316', // Green
+  border: '2px solid #f97316', // Orange
   borderRadius: '50px',
   fontSize: '1.1rem',
   fontWeight: 600,
@@ -349,9 +388,6 @@ const ctaButton = {
   outline: 'none',
   display: 'block',
   margin: '4rem auto 0',
-  ':hover': {
-    backgroundColor: 'rgba(16, 185, 129, 0.2)' // Green
-  }
 };
 
 export default AboutUsPage;
