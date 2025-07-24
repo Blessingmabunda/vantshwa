@@ -1,3 +1,5 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* index.css or App.css */
+body {
+    font-family: 'Roboto', sans-serif; /* Change to any font you like */
+  }
+  
