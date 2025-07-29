@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { throttle } from "lodash";
-import Header from "../../shared/header";
-import Footer from "../../shared/footer"; // Added Footer import
+
 import youthImage from "../../assets/youth.jpg";
+import video1 from "../../assets/video1.mp4";
+import video2 from "../../assets/video2.mp4";
+import image1 from "../../assets/image1.jpeg";
 
 // Global CSS Reset
 const GlobalStyle = createGlobalStyle`
@@ -22,28 +24,43 @@ const Container = styled.div`
   background-color: #0f172a;
   position: relative;
   overflow-x: hidden;
-  display: flex; /* Enable flexbox for footer positioning */
-  flex-direction: column; /* Stack children vertically */
-  width: 100vw; /* Ensure full viewport width */
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
 `;
 
 const HeaderContainer = styled.div`
-  width: 100vw; /* Full viewport width */
-  position: fixed; /* Keep header at top */
+  width: 100vw;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 4; /* Above other content */
+  z-index: 4;
   margin: 0;
   padding: 0;
+  height: 80px;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const HeaderTitle = styled.h2`
+  color: #10b981;
+  margin: 0;
+  font-size: 1.5rem;
 `;
 
 const FooterContainer = styled.div`
-  width: 100vw; /* Full viewport width */
-  position: relative; /* Stay in document flow */
-  z-index: 3; /* Above background */
-  margin-top: auto; /* Push to bottom of flex container */
+  width: 100vw;
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
   margin: 0;
-  padding: 0;
+  padding: 2rem 0;
+  background: rgba(15, 23, 42, 0.9);
+  text-align: center;
+  color: #cbd5e1;
 `;
 
 const BackgroundImage = styled.div`
@@ -79,10 +96,10 @@ const DarkOverlay = styled.div`
 const ContentContainer = styled.main`
   position: relative;
   z-index: 3;
-  padding: 80px 20px 80px; /* Adjusted for header and footer height */
+  padding: 80px 20px 80px;
   max-width: 1200px;
   margin: 0 auto;
-  flex: 1; /* Grow to push footer down */
+  flex: 1;
 `;
 
 const ContentWrapper = styled.div`
@@ -107,7 +124,7 @@ const PageTitle = styled.h1`
 `;
 
 const HighlightText = styled.span`
-  color: #f97316; // Orange
+  color: #f97316;
 `;
 
 const PageSubtitle = styled.p`
@@ -119,6 +136,182 @@ const PageSubtitle = styled.p`
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
+`;
+
+const DemoSection = styled.div`
+  background-color: rgba(30, 41, 59, 0.6);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  text-align: center;
+`;
+
+const DemoTitle = styled.h2`
+  color: #10b981;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+`;
+
+const DemoDescription = styled.p`
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const MediaControls = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem auto;
+  flex-wrap: wrap;
+`;
+
+const MediaButton = styled.button`
+  padding: 1rem 1.5rem;
+  background: linear-gradient(45deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+  color: #e2e8f0;
+  border: 2px solid #10b981;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 180px;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: linear-gradient(45deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.2));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+`;
+
+const MediaContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 100%;
+`;
+
+const VideoWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+`;
+
+const MediaCaption = styled.div`
+  background: rgba(15, 23, 42, 0.9);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+`;
+
+const CaptionTitle = styled.h3`
+  color: #10b981;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+`;
+
+const CaptionText = styled.p`
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.5;
+`;
+
+const CallToActionSection = styled.div`
+  background: linear-gradient(45deg, rgba(249, 115, 22, 0.1), rgba(16, 185, 129, 0.1));
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+  border: 2px solid rgba(249, 115, 22, 0.3);
+`;
+
+const CTATitle = styled.h2`
+  color: #f97316;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+`;
+
+const CTAText = styled.p`
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+`;
+
+const CTAButton = styled.button`
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #f97316, #ea580c);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 0.5rem;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.4);
+  }
 `;
 
 const ServicesGrid = styled.div`
@@ -142,7 +335,7 @@ const ServiceCard = styled.div`
 `;
 
 const ServiceTitle = styled.h3`
-  color: #10b981; // Green
+  color: #10b981;
   font-size: 1.3rem;
   margin-bottom: 1rem;
   font-weight: 600;
@@ -182,7 +375,7 @@ const ListItem = styled.li`
   padding-left: 1rem;
   &:before {
     content: "•";
-    color: #10b981; // Green
+    color: #10b981;
     position: absolute;
     left: 0;
   }
@@ -201,7 +394,7 @@ const ServiceFooter = styled.div`
 `;
 
 const ToggleButton = styled.span`
-  color: #10b981; // Green
+  color: #10b981;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -211,27 +404,6 @@ const ToggleButton = styled.span`
   gap: 0.3rem;
   &:hover {
     text-decoration: underline;
-  }
-`;
-
-const CtaButton = styled.button`
-  padding: 1rem 2.5rem;
-  background-color: rgba(16, 185, 129, 0.1); // Green
-  color: #e2e8f0;
-  border: 2px solid #10b981; // Green
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  outline: none;
-  display: block;
-  margin: 3rem auto 0;
-  &:hover {
-    background-color: rgba(16, 185, 129, 0.3);
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); // Blue
   }
 `;
 
@@ -247,7 +419,6 @@ const Particle = styled.div`
   filter: blur(1px);
   z-index: 2;
   pointer-events: none;
-
   @keyframes float {
     0%,
     100% {
@@ -259,9 +430,63 @@ const Particle = styled.div`
   }
 `;
 
+const MediaDisplay = ({ media, onClose }) => {
+  if (!media.src) return null;
+
+  const getMediaInfo = (media) => {
+    switch (media.type) {
+      case "video":
+        if (media.src.includes("BigBuckBunny")) {
+          return {
+            title: "Service Overview Video",
+            description: "Watch this comprehensive overview of our counseling services and approach. See how we help individuals, couples, and families through our faith-based programs."
+          };
+        } else {
+          return {
+            title: "Client Success Stories",
+            description: "Hear testimonials from clients who have experienced transformation through our counseling services. Real stories of healing and growth."
+          };
+        }
+      case "image":
+        return {
+          title: "Our Counseling Environment",
+          description: "Take a look at our welcoming, professional counseling spaces designed to create a safe and comfortable atmosphere for healing."
+        };
+      default:
+        return { title: "", description: "" };
+    }
+  };
+
+  const mediaInfo = getMediaInfo(media);
+
+  return (
+    <MediaContainer>
+      <div style={{ width: "100%", position: 'relative' }}>
+        <CloseButton onClick={onClose} aria-label="Close media">
+          ×
+        </CloseButton>
+        <VideoWrapper>
+          {media.type === "video" ? (
+            <video controls width="100%" style={{ display: "block" }}>
+              <source src={media.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <img src={media.src} alt="Media Content" style={{ width: "100%", display: "block" }} />
+          )}
+        </VideoWrapper>
+        <MediaCaption>
+          <CaptionTitle>{mediaInfo.title}</CaptionTitle>
+          <CaptionText>{mediaInfo.description}</CaptionText>
+        </MediaCaption>
+      </div>
+    </MediaContainer>
+  );
+};
+
 const ServicesPage = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const [media, setMedia] = useState({ type: null, src: null });
   const contentRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState(null);
 
@@ -271,7 +496,7 @@ const ServicesPage = () => {
         x: (e.clientX / window.innerWidth - 0.5) * 15,
         y: (e.clientY / window.innerHeight - 0.5) * 10,
       });
-    }, 16); // ~60fps
+    }, 16);
 
     window.addEventListener("mousemove", handleMouseMove);
 
@@ -297,9 +522,9 @@ const ServicesPage = () => {
         top: Math.random() * 100,
         delay: Math.random() * 5,
         color: [
-          "rgba(249, 115, 22, 0.6)", // Orange
-          "rgba(16, 185, 129, 0.6)", // Green
-          "rgba(59, 130, 246, 0.6)", // Blue
+          "rgba(249, 115, 22, 0.6)",
+          "rgba(16, 185, 129, 0.6)",
+          "rgba(59, 130, 246, 0.6)",
         ][Math.floor(Math.random() * 3)],
       })),
     []
@@ -432,23 +657,24 @@ const ServicesPage = () => {
       <GlobalStyle />
       <Container>
         <HeaderContainer>
-          <Header />
+          <HeaderTitle>Counseling Services</HeaderTitle>
         </HeaderContainer>
+
         {particles.map((particle) => (
           <Particle
             key={particle.id}
             size={particle.size}
             left={particle.left}
             top={particle.top}
-            delay={
-
-particle.delay}
+            delay={particle.delay}
             color={particle.color}
           />
         ))}
+
         <BackgroundImage style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}>
           <DarkOverlay />
         </BackgroundImage>
+
         <ContentContainer>
           <ContentWrapper ref={contentRef}>
             <PageTitle>
@@ -457,6 +683,31 @@ particle.delay}
             <PageSubtitle>
               Structured, faith-based, and practical counseling programs to empower learners, couples, individuals, families, churches, and communities. Available privately, in schools, churches, or community venues.
             </PageSubtitle>
+
+            <DemoSection>
+              <DemoTitle>🎥 See Our Services in Action</DemoTitle>
+              <DemoDescription>
+                These demonstration videos show you exactly how our counseling services work and the results you can expect. Watch to learn about our approach, meet our team, and hear from satisfied clients who have experienced real transformation.
+              </DemoDescription>
+              
+              <MediaControls>
+                <MediaButton onClick={() => setMedia({ type: "video", src: video1 })}>
+                  Watch video 1 
+                </MediaButton>
+                <MediaButton onClick={() => setMedia({ type: "video", src: video2 })}>
+                  Watch video 2
+                </MediaButton>
+                <MediaButton onClick={() => setMedia({ type: "image", src: image1 })}>
+                  View image
+                </MediaButton>
+              </MediaControls>
+
+              <MediaDisplay 
+                media={media} 
+                onClose={() => setMedia({ type: null, src: null })} 
+              />
+            </DemoSection>
+
             <ServicesGrid>
               {services.map((service, index) => (
                 <ServiceCard
@@ -502,18 +753,11 @@ particle.delay}
                 </ServiceCard>
               ))}
             </ServicesGrid>
-            {/* <CtaButton
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-              onClick={() => window.location.href = "/contact"}
-              aria-label="Get started with our services"
-            >
-              Get Started Today →
-            </CtaButton> */}
           </ContentWrapper>
         </ContentContainer>
+
         <FooterContainer>
-          <Footer />
+          <p>&copy; 2025 Counseling Services. All rights reserved.</p>
         </FooterContainer>
       </Container>
     </>

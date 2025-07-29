@@ -36,7 +36,7 @@ const ContactUsDialog = ({ isOpen, onClose }) => {
         </button>
         <h2 style={modalTitle}>Contact Us</h2>
         <div style={contactInfo}>
-          <p style={companyName}>CHOOSE ANY OPTION YOU WANNA USE</p>
+          <p style={companyName}>CHOOSE ANY OPTION YOU WANT USE</p>
 
           {/* Phone Number Selection */}
           <div style={phoneSelectContainer}>
