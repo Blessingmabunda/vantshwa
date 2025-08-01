@@ -46,22 +46,12 @@ const HeaderContainer = styled.div`
   justify-content: center;
 `;
 
-const HeaderTitle = styled.h2`
-  color: #10b981;
-  margin: 0;
-  font-size: 1.5rem;
-`;
-
-const FooterContainer = styled.div`
+const FooterWrapper = styled.div`
   width: 100vw;
   position: relative;
   z-index: 3;
   margin-top: auto;
-  margin: 0;
-  padding: 2rem 0;
   background: rgba(15, 23, 42, 0.9);
-  text-align: center;
-  color: #cbd5e1;
 `;
 
 const BackgroundImage = styled.div`
@@ -97,10 +87,11 @@ const DarkOverlay = styled.div`
 const ContentContainer = styled.main`
   position: relative;
   z-index: 3;
-  padding: 80px 20px 80px;
+  padding: 80px 20px;
   max-width: 1200px;
   margin: 0 auto;
   flex: 1;
+  width: 100%;
 `;
 
 const ContentWrapper = styled.div`
@@ -657,8 +648,8 @@ const ServicesPage = () => {
     <>
       <GlobalStyle />
       <Container>
-      
-    <Header/>
+        <Header/>
+        
         {particles.map((particle) => (
           <Particle
             key={particle.id}
@@ -675,7 +666,6 @@ const ServicesPage = () => {
         </BackgroundImage>
 
         <ContentContainer>
-          
           <ContentWrapper ref={contentRef}>
             <PageTitle>
               OUR <HighlightText>SERVICES</HighlightText>
@@ -754,15 +744,14 @@ const ServicesPage = () => {
               ))}
             </ServicesGrid>
           </ContentWrapper>
-          <Footer/>
         </ContentContainer>
 
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
       </Container>
-      
     </>
-    
   );
-  
 };
 
 export default ServicesPage;
