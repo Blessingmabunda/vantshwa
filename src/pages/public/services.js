@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { throttle } from "lodash";
-
+import Header from "../../shared/header";
+import Footer from "../../shared/footer"; 
 import youthImage from "../../assets/youth.jpg";
 import video1 from "../../assets/video1.mp4";
 import video2 from "../../assets/video2.mp4";
@@ -656,10 +657,8 @@ const ServicesPage = () => {
     <>
       <GlobalStyle />
       <Container>
-        <HeaderContainer>
-          <HeaderTitle>Counseling Services</HeaderTitle>
-        </HeaderContainer>
-
+      
+    <Header/>
         {particles.map((particle) => (
           <Particle
             key={particle.id}
@@ -676,6 +675,7 @@ const ServicesPage = () => {
         </BackgroundImage>
 
         <ContentContainer>
+          
           <ContentWrapper ref={contentRef}>
             <PageTitle>
               OUR <HighlightText>SERVICES</HighlightText>
@@ -754,14 +754,15 @@ const ServicesPage = () => {
               ))}
             </ServicesGrid>
           </ContentWrapper>
+          <Footer/>
         </ContentContainer>
 
-        <FooterContainer>
-          <p>&copy; 2025 Counseling Services. All rights reserved.</p>
-        </FooterContainer>
       </Container>
+      
     </>
+    
   );
+  
 };
 
 export default ServicesPage;

@@ -142,7 +142,7 @@ const DarkLandingPage = () => {
               animationDelay: '0.3s',
               opacity: 0
             }}>
-              Empowering the Youth. Healing Families. Restoring Hope in Mpumalanga. Together, we rise and heal.
+              Empowering the Youth. Healing Families. Restoring Hope in South Africa. Together, we rise and heal.
             </p>
             <div style={{
               ...divider,
