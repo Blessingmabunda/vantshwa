@@ -290,7 +290,7 @@ const NavigationMenu = () => {
           </div>
 
           <nav className="desktop-nav" style={styles.desktopNav}>
-            {['Home', 'AboutUs', 'Services', 'Pricing'].map((item) => {
+            {['Home', 'AboutUs', 'Services', 'Pricing', 'FAQs'].map((item) => {
               const isActive = activePage === item;
               return (
                 <div key={item} style={{ position: 'relative' }}>
@@ -362,7 +362,7 @@ const NavigationMenu = () => {
 
         <div className="mobile-menu" style={styles.mobileMenu}>
           <nav style={styles.mobileNav}>
-            {['Home', 'AboutUs', 'Services', 'Pricing'].map((item, index) => {
+            {['Home', 'AboutUs', 'Services', 'Pricing', 'FAQs'].map((item, index) => {
               const isActive = activePage === item;
               return (
                 <a
