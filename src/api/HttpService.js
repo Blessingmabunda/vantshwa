@@ -2,7 +2,7 @@ import axios from "axios";
 
 const httpService = axios.create({
 
-  baseURL: "http://localhost:3030",
+  baseURL: "https://vantshwa-backend.onrender.com",
   headers: {
     "Content-Type": "application/json",
     
