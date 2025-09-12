@@ -1,20 +1,37 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import { throttle } from "lodash";
 import Header from "../../shared/header";
 import Footer from "../../shared/footer"; 
 import youthImage from "../../assets/youth.jpg";
-import video1 from "../../assets/video1.mp4";
-import video2 from "../../assets/video2.mp4";
-import image1 from "../../assets/image1.jpeg";
+import VideoService from "../../api/videoService";
+import VideoModal from "../../components/VideoModal";
+
 
 // Global CSS Reset
 const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+  
   body, html {
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
+  }
+  
+  body {
+    position: relative;
+  }
+`;
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 `;
 
@@ -27,24 +44,14 @@ const Container = styled.div`
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  width: 100vw;
-`;
-
-const HeaderContainer = styled.div`
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 4;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  height: 80px;
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
+
+
 
 const FooterWrapper = styled.div`
   width: 100vw;
@@ -92,6 +99,17 @@ const ContentContainer = styled.main`
   margin: 0 auto;
   flex: 1;
   width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: 768px) {
+    padding: 60px 15px;
+    margin: 0;
+    width: 100%;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 40px 10px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -104,6 +122,21 @@ const ContentWrapper = styled.div`
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 0;
+  }
 `;
 
 const PageTitle = styled.h1`
@@ -162,6 +195,19 @@ const MediaControls = styled.div`
   gap: 1rem;
   margin: 1.5rem auto;
   flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    margin: 1rem auto;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
 `;
 
 const MediaButton = styled.button`
@@ -177,6 +223,21 @@ const MediaButton = styled.button`
   min-width: 180px;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
+  
+  @media (max-width: 768px) {
+    min-width: 160px;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 480px) {
+    min-width: 140px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 280px;
+  }
 
   &:hover {
     background: linear-gradient(45deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.2));
@@ -266,63 +327,93 @@ const CaptionText = styled.p`
   line-height: 1.5;
 `;
 
-const CallToActionSection = styled.div`
-  background: linear-gradient(45deg, rgba(249, 115, 22, 0.1), rgba(16, 185, 129, 0.1));
-  border-radius: 15px;
-  padding: 2rem;
-  margin: 2rem 0;
-  text-align: center;
-  border: 2px solid rgba(249, 115, 22, 0.3);
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
 `;
 
-const CTATitle = styled.h2`
-  color: #f97316;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
+const LoadingSpinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(16, 185, 129, 0.2);
+  border-top: 4px solid #10b981;
+  border-radius: 50%;
+  animation: ${spin} 1s linear infinite;
 `;
 
-const CTAText = styled.p`
+const LoadingText = styled.div`
   color: #cbd5e1;
   font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+  text-align: center;
 `;
 
-const CTAButton = styled.button`
-  padding: 1rem 2rem;
-  background: linear-gradient(45deg, #f97316, #ea580c);
-  color: white;
-  border: none;
-  border-radius: 10px;
+const ErrorMessage = styled.div`
+  color: #ef4444;
   font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 0 0.5rem;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.4);
-  }
+  text-align: center;
+  padding: 2rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  margin: 1rem 0;
 `;
+
+
+
+
+
+
+
+
 
 const ServicesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
 `;
 
 const ServiceCard = styled.div`
   background-color: rgba(30, 41, 59, 0.5);
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid ${({ active }) => (active ? "rgba(16, 185, 129, 0.7)" : "rgba(16, 185, 129, 0.2)")};
+  border: 1px solid ${({ $active }) => ($active ? "rgba(16, 185, 129, 0.7)" : "rgba(16, 185, 129, 0.2)")};
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 8px;
   }
 `;
 
@@ -422,34 +513,8 @@ const Particle = styled.div`
   }
 `;
 
-const MediaDisplay = ({ media, onClose }) => {
-  if (!media.src) return null;
-
-  const getMediaInfo = (media) => {
-    switch (media.type) {
-      case "video":
-        if (media.src.includes("BigBuckBunny")) {
-          return {
-            title: "Service Overview Video",
-            description: "Watch this comprehensive overview of our counseling services and approach. See how we help individuals, couples, and families through our faith-based programs."
-          };
-        } else {
-          return {
-            title: "Client Success Stories",
-            description: "Hear testimonials from clients who have experienced transformation through our counseling services. Real stories of healing and growth."
-          };
-        }
-      case "image":
-        return {
-          title: "Our Counseling Environment",
-          description: "Take a look at our welcoming, professional counseling spaces designed to create a safe and comfortable atmosphere for healing."
-        };
-      default:
-        return { title: "", description: "" };
-    }
-  };
-
-  const mediaInfo = getMediaInfo(media);
+const MediaDisplay = ({ video, onClose }) => {
+  if (!video) return null;
 
   return (
     <MediaContainer>
@@ -458,18 +523,14 @@ const MediaDisplay = ({ media, onClose }) => {
           ×
         </CloseButton>
         <VideoWrapper>
-          {media.type === "video" ? (
-            <video controls width="100%" style={{ display: "block" }}>
-              <source src={media.src} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          ) : (
-            <img src={media.src} alt="Media Content" style={{ width: "100%", display: "block" }} />
-          )}
+          <video controls width="100%" style={{ display: "block" }}>
+            <source src={video.url} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </VideoWrapper>
         <MediaCaption>
-          <CaptionTitle>{mediaInfo.title}</CaptionTitle>
-          <CaptionText>{mediaInfo.description}</CaptionText>
+          <CaptionTitle>{video.title}</CaptionTitle>
+          <CaptionText>{video.description}</CaptionText>
         </MediaCaption>
       </div>
     </MediaContainer>
@@ -478,9 +539,34 @@ const MediaDisplay = ({ media, onClose }) => {
 
 const ServicesPage = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [media, setMedia] = useState({ type: null, src: null });
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const contentRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [videos, setVideos] = useState([]);
+  const [videosLoading, setVideosLoading] = useState(true);
+  const [videosError, setVideosError] = useState(null);
+
+  // Fetch videos from API
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        setVideosLoading(true);
+        setVideosError(null);
+        const apiVideos = await VideoService.getVideosForComponent();
+        setVideos(apiVideos);
+      } catch (error) {
+        console.error('Failed to fetch videos:', error);
+        setVideosError('Failed to load videos. Please try again later.');
+        // Fallback to empty array if API fails
+        setVideos([]);
+      } finally {
+        setVideosLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = throttle((e) => {
@@ -531,6 +617,16 @@ const ServicesPage = () => {
       e.preventDefault();
       toggleCategory(category);
     }
+  };
+
+  const handleVideoClick = (video) => {
+    setSelectedVideo(video);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedVideo(null);
   };
 
   const services = [
@@ -680,29 +776,42 @@ const ServicesPage = () => {
                 These demonstration videos show you exactly how our counseling services work and the results you can expect. Watch to learn about our approach, meet our team, and hear from satisfied clients who have experienced real transformation.
               </DemoDescription>
               
-              <MediaControls>
-                <MediaButton onClick={() => setMedia({ type: "video", src: video1 })}>
-                  Watch video 1 
-                </MediaButton>
-                <MediaButton onClick={() => setMedia({ type: "video", src: video2 })}>
-                  Watch video 2
-                </MediaButton>
-                <MediaButton onClick={() => setMedia({ type: "image", src: image1 })}>
-                  View image
-                </MediaButton>
-              </MediaControls>
-
-              <MediaDisplay 
-                media={media} 
-                onClose={() => setMedia({ type: null, src: null })} 
-              />
+              {videosLoading ? (
+                <LoadingContainer>
+                  <LoadingSpinner />
+                  <LoadingText>
+                    <div style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Loading videos...</div>
+                    <div style={{ fontSize: '0.9rem' }}>Please wait while we fetch the latest content</div>
+                  </LoadingText>
+                </LoadingContainer>
+              ) : videosError ? (
+                <ErrorMessage>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>⚠️ {videosError}</div>
+                  <div style={{ fontSize: '0.9rem', color: '#cbd5e1' }}>Please check your connection and try refreshing the page</div>
+                </ErrorMessage>
+              ) : videos.length > 0 ? (
+                <>
+                  <MediaControls>
+                    {videos.map((video, index) => (
+                      <MediaButton key={video.id} onClick={() => handleVideoClick(video)}>
+                        {video.title}
+                      </MediaButton>
+                    ))}
+                  </MediaControls>
+                </>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '2rem', color: '#cbd5e1' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>No videos available</div>
+                  <div style={{ fontSize: '0.9rem' }}>Check back later for new content</div>
+                </div>
+              )}
             </DemoSection>
 
             <ServicesGrid>
               {services.map((service, index) => (
                 <ServiceCard
                   key={index}
-                  active={activeCategory === index}
+                  $active={activeCategory === index}
                   onClick={() => toggleCategory(index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   tabIndex={0}
@@ -749,6 +858,12 @@ const ServicesPage = () => {
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
+        
+        <VideoModal 
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          video={selectedVideo}
+        />
       </Container>
     </>
   );
